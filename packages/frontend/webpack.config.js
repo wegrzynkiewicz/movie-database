@@ -2,6 +2,7 @@ const {resolve} = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = function (env, options = {}) {
 
@@ -16,6 +17,30 @@ module.exports = function (env, options = {}) {
         mode,
         module: {
             rules: [
+                {
+                    test: /\.vue$/,
+                    use: [
+                        {
+                            loader: 'vue-loader',
+                        }
+                    ]
+                },
+                {
+                    test: /\.s[ac]ss$/i,
+                    exclude: /\.inline\.scss$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: {
+                                    localIdentName: "[name]__[local]__[hash:4]",
+                                },
+                            }
+                        },
+                        "sass-loader",
+                    ],
+                },
             ],
         },
         output: {
@@ -34,7 +59,14 @@ module.exports = function (env, options = {}) {
             new MiniCssExtractPlugin({
                 filename: '[name].[contenthash:6].css',
             }),
+            new VueLoaderPlugin(),
         ],
+        resolve: {
+            alias: {
+              'vue$': 'vue/dist/vue.esm.js',
+            },
+            extensions: ['.js', '.vue'],
+        },
         watchOptions: {
             ignored: ['node_modules/**']
         }
