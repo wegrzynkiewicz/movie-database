@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 import App from '../components/App';
-import {createUserModule} from './createUserModule';
+import {createMovieModule} from './movieModule';
+import {createUserModule} from './userModule';
 import {BootstrapVue} from 'bootstrap-vue'
 
 function initVuex() {
 
     const store = new Vuex.Store({
         modules: {
+            movie: createMovieModule(),
             user: createUserModule(),
         }
     });

@@ -1,10 +1,5 @@
+import {createUpdater} from './createUpdater';
 import {createGoogleSignInButton, initAuth, loadAuth, loadSignIn} from './googleAuth'
-
-function createUpdater(propertyName) {
-    return function (state, payload) {
-        state[propertyName] = payload;
-    }
-}
 
 async function createSignInButton({commit, state}, {id}) {
     if (state.isSignIn2ModuleLoaded === false) {

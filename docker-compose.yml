@@ -3,6 +3,8 @@ services:
 
   backend:
     command: node ./src/index.js
+    dns:
+      - 8.8.8.8
     image: node:14.15.4-alpine3.12
     volumes:
       - ./packages/backend:/app
