@@ -12,6 +12,7 @@ module.exports = function (env, options = {}) {
         entry: {
             main: [
                 './src/index.js',
+                './src/styles/app.scss',
             ],
         },
         mode,
@@ -27,16 +28,10 @@ module.exports = function (env, options = {}) {
                 },
                 {
                     test: /\.s[ac]ss$/i,
-                    exclude: /\.inline\.scss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
-                            options: {
-                                modules: {
-                                    localIdentName: "[name]__[local]__[hash:4]",
-                                },
-                            }
                         },
                         "sass-loader",
                     ],
