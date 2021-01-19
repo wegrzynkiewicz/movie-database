@@ -1,18 +1,7 @@
-import Vue from 'vue';
-import App from './components/App';
-import {BootstrapVue} from 'bootstrap-vue'
+import {loadAuth} from './scripts/googleAuth';
+import {initVue} from './scripts/initVue';
 
-async function bootstrap() {
-    Vue.use(BootstrapVue);
-    return new Promise((resolve) => {
-        new Vue({
-            el: '#app',
-            render: h => h(App),
-            mounted() {
-                resolve();
-            }
-        });
-    })
-}
-
-bootstrap();
+document.addEventListener('DOMContentLoaded', async () => {
+    initVue('#app');
+    loadAuth();
+})
