@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <b-form @submit="submit" inline>
+  <div class="container mt-4">
+    <b-form @submit="submit" inline class="search-form">
       <label class="sr-only" for="video-name">Movie name</label>
       <b-form-input
         id="video-name"
@@ -35,3 +35,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .search-form {
+    justify-content: center;
+  }
+</style>

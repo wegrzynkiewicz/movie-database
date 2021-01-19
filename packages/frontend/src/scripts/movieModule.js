@@ -24,13 +24,21 @@ async function api({method = 'GET', path, query}) {
     return {response, data};
 }
 
-async function search({state}, {name}) {
-    await api({
+async function updateMovies(state, {movies, total}) {
+    state.total = total;
+    state.movies = movies;
+}
+
+async function search({commit}, {name}) {
+    const {data} = await api({
         path: '/movies',
         query: {
             name,
         }
     });
+    const {movies} = data;
+    const total = 100; // TODO:
+    commit('updateMovies', {movies, total});
 }
 
 export function createMovieModule() {
@@ -39,12 +47,14 @@ export function createMovieModule() {
             search,
         },
         mutations: {
+            updateMovies
         },
         namespaced: true,
         state() {
             return {
                 status: 'empty',
                 movies: [],
+                total: 0,
             }
         },
     }

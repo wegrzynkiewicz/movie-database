@@ -21,8 +21,10 @@ async function checkToken({commit, state}) {
     auth.isSignedIn.listen((value) => commit('updateStatus', value ? 'signed-in' : 'signed-out'));
     auth.currentUser.listen((user) => {
         const basicProfile = user.getBasicProfile();
-        const fullName = basicProfile.getName();
-        commit('updateFullName', fullName)
+        if (basicProfile) {
+            const fullName = basicProfile.getName();
+            commit('updateFullName', fullName)
+        }
     });
 
     await new Promise((resolve, reject) => {

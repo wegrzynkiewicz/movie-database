@@ -11,8 +11,8 @@ module.exports = function (env, options = {}) {
     return {
         entry: {
             main: [
-                './src/index.js',
                 './src/styles/app.scss',
+                './src/index.js',
             ],
         },
         mode,

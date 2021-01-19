@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import App from '../components/App';
 import {createMovieModule} from './movieModule';
 import {createUserModule} from './userModule';
-import {BootstrapVue} from 'bootstrap-vue'
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 
 function initVuex() {
 
@@ -20,6 +20,7 @@ function initVuex() {
 export async function initVue(selector) {
 
     Vue.use(BootstrapVue);
+    Vue.use(IconsPlugin);
     Vue.use(Vuex);
 
     const {store} = initVuex();

@@ -20,7 +20,13 @@ async function getMovies({name, page}) {
 api.get('/movies', asyncHandler(async (req, res) => {
     const {name, page} = req.query;
     const {data} = await getMovies({name, page});
-    const {Search: movies} = data;
+    const movies = data.Search.map((movie) => ({
+        eid: movie.imdbID,
+        image: movie.Poster,
+        title: movie.Title,
+        type: movie.Type,
+        year: movie.Year,
+    }));
     res.json({movies});
 }));
 
