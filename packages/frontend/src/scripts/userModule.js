@@ -36,7 +36,7 @@ async function checkToken({commit, state}) {
     commit('updateStatus', isSignedIn ? 'signed-in' : 'signed-out')
 }
 
-async function signOut({commit, dispatch, state}) {
+async function signOut({dispatch, state}) {
     if (state.auth === undefined) {
         await dispatch('user/checkToken');
     }

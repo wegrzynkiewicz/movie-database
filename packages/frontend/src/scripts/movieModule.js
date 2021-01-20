@@ -47,7 +47,8 @@ export function createMovieModule() {
             search,
         },
         mutations: {
-            updateMovies
+            updateMovies,
+            updateStatus: createUpdater('status'),
         },
         namespaced: true,
         state() {

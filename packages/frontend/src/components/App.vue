@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <NavBar />
-    <component :is="component" />
-  </div>
+    <div>
+        <NavBar />
+        <component :is="component" />
+    </div>
 </template>
 
 <script>
@@ -12,23 +12,25 @@ import Loading from "./Loading";
 import Login from "./Login";
 
 export default {
-  components: {
-    NavBar,
-  },
-  computed: {
-    component() {
-      switch (this.$store.state.user.status) {
-        case "pending":
-          return Loading;
-        case "signed-in":
-          return DatabaseSearch;
-        case "signed-out":
-          return Login;
-      }
+    components: {
+        NavBar,
     },
-  },
-  async mounted() {
-    await this.$store.dispatch("user/checkToken");
-  },
+    computed: {
+        component() {
+            switch (this.$store.state.user.status) {
+                case "pending":
+                    return Loading;
+                case "signed-in":
+                    return DatabaseSearch;
+                case "signed-out":
+                    return Login;
+                default:
+                    return Loading;
+            }
+        },
+    },
+    async mounted() {
+        await this.$store.dispatch("user/checkToken");
+    },
 };
 </script>

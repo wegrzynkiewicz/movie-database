@@ -23,7 +23,7 @@ export function loadAuth() {
     return new Promise((resolve) => {
         gapi.load('auth2', resolve);
     });
-};
+}
 
 export async function loadSignIn() {
     return new Promise((resolve) => {
