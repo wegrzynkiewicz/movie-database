@@ -8,7 +8,7 @@ const api = new express.Router();
 async function getMovies({name, page}) {
     const searchParams = new URLSearchParams();
     searchParams.append('apikey', 'd7e259ae');
-    searchParams.append('p', page);
+    searchParams.append('page', page);
     searchParams.append('s', name);
     const queryString = searchParams.toString();
     const url = `http://www.omdbapi.com/?${queryString}`;
@@ -27,7 +27,8 @@ api.get('/movies', asyncHandler(async (req, res) => {
         type: movie.Type,
         year: movie.Year,
     }));
-    res.json({movies});
+    const total = data.totalResults;
+    res.json({movies, total});
 }));
 
 app.use('/api', api);

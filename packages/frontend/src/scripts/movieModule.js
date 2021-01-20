@@ -1,4 +1,4 @@
-import {createUpdater} from './createUpdater';
+import {createPaginationModule} from './paginationModule';
 
 async function api({method = 'GET', path, query}) {
     const searchParams = new URLSearchParams();
@@ -24,21 +24,24 @@ async function api({method = 'GET', path, query}) {
     return {response, data};
 }
 
-async function updateMovies(state, {movies, total}) {
-    state.total = total;
+async function updateMovies(state, {movies}) {
     state.movies = movies;
 }
 
-async function search({commit}, {name}) {
+async function search({commit, state}) {
+    commit('updateStatus', 'loading');
     const {data} = await api({
         path: '/movies',
         query: {
-            name,
+            name: state.searchName,
+            page: state.pagination.page,
         }
     });
-    const {movies} = data;
-    const total = 100; // TODO:
-    commit('updateMovies', {movies, total});
+    const {movies, total} = data;
+
+    commit('pagination/updateTotal', total);
+    commit('updateMovies', {movies});
+    commit('updateStatus', 'finish');
 }
 
 export function createMovieModule() {
@@ -48,14 +51,23 @@ export function createMovieModule() {
         },
         mutations: {
             updateMovies,
-            updateStatus: createUpdater('status'),
+            updateSearchName(state, payload) {
+                state.searchName = payload;
+                state.pagination.page = 1;
+            },
+            updateStatus(state, payload) {
+                state.status = payload;
+            },
         },
         namespaced: true,
+        modules: {
+            pagination: createPaginationModule(),
+        },
         state() {
             return {
-                status: 'empty',
+                searchName: '',
+                status: 'start',
                 movies: [],
-                total: 0,
             }
         },
     }

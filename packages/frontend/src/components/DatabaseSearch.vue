@@ -41,8 +41,8 @@ export default {
     methods: {
         submit(event) {
             event.preventDefault();
-            const { name } = this;
-            this.$store.dispatch("movie/search", { name });
+            this.$store.commit('movie/updateSearchName', this.name);
+            this.$store.dispatch('movie/search');
         },
     },
 };

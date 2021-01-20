@@ -1,4 +1,3 @@
-import {createUpdater} from './createUpdater';
 import {createGoogleSignInButton, initAuth, loadAuth, loadSignIn} from './googleAuth'
 
 async function createSignInButton({commit, state}, {id}) {
@@ -51,10 +50,18 @@ export function createUserModule() {
             signOut,
         },
         mutations: {
-            updateAuth: createUpdater('auth'),
-            updateSignInModuleLoaded: createUpdater('isSignInModuleLoaded'),
-            updateStatus: createUpdater('status'),
-            updateFullName: createUpdater('fullName'),
+            updateAuth(state, payload) {
+                state.auth = payload;
+            },
+            updateSignInModuleLoaded(state, payload) {
+                state.isSignInModuleLoaded = payload;
+            },
+            updateStatus(state, payload) {
+                state.status = payload;
+            },
+            updateFullName(state, payload) {
+                state.fullName = payload;
+            },
         },
         namespaced: true,
         state() {
