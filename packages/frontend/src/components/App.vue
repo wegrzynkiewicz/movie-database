@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import DatabaseSearch from "./DatabaseSearch";
 import NavBar from "./NavBar";
 import Loading from "./Loading";
 import Login from "./Login";
@@ -21,7 +20,7 @@ export default {
                 case "pending":
                     return Loading;
                 case "signed-in":
-                    return DatabaseSearch;
+                    return this.$options.components.RouterView;
                 case "signed-out":
                     return Login;
                 default:

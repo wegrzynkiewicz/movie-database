@@ -40,6 +40,7 @@ module.exports = function (env, options = {}) {
         },
         output: {
             path: resolve(__dirname, 'build'),
+            publicPath: '/',
             filename: '[name].[contenthash:6].js',
         },
         plugins: [
@@ -47,7 +48,7 @@ module.exports = function (env, options = {}) {
             new HtmlWebpackPlugin({
                 cache: false,
                 inject: 'head',
-                publicPath: '',
+                publicPath: '/',
                 scriptLoading: 'defer',
                 template: 'src/index.html',
             }),

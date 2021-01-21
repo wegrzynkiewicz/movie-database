@@ -22,28 +22,16 @@ export default {
             get() {
                 return this.$store.state[this.module].pagination.page;
             },
-            set(value) {
-                this.$store.commit(`${this.module}/pagination/updatePage`, value);
-                this.$emit('update');
-            }
-        },
-        total: {
-            get() {
-                return this.$store.state[this.module].pagination.total;
+            set(page) {
+                this.$store.commit(`${this.module}/pagination/updatePage`, page);
+                this.$emit('update', page);
             },
-            set(value) {
-                this.$store.commit(`${this.module}/pagination.updateTotal`, value);
-                this.$emit('update');
-            }
         },
-        perPage: {
-            get() {
-                return this.$store.state[this.module].pagination.perPage;
-            },
-            set(value) {
-                this.$store.commit(`${this.module}/pagination/updatePerPage`, value);
-                this.$emit('update');
-            }
+        total() {
+            return this.$store.state[this.module].pagination.total;
+        },
+        perPage() {
+            return this.$store.state[this.module].pagination.perPage;
         },
     },
 };

@@ -5,7 +5,7 @@
         variant="info"
     >
         <div class="container">
-            <b-navbar-brand href="#">
+            <b-navbar-brand href="/">
                 Movie Database
             </b-navbar-brand>
 

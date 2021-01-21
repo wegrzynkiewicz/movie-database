@@ -56,7 +56,7 @@ export default {
     methods: {
         show() {},
         async onPaginationUpdate() {
-            await this.$store.dispatch('movie/search')
+            await this.$store.dispatch('movie/search');
         },
     },
 };

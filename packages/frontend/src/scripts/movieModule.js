@@ -29,6 +29,7 @@ async function updateMovies(state, {movies}) {
 }
 
 async function search({commit, state}) {
+
     commit('updateStatus', 'loading');
     const {data} = await api({
         path: '/movies',
@@ -39,8 +40,8 @@ async function search({commit, state}) {
     });
     const {movies, total} = data;
 
-    commit('pagination/updateTotal', total);
     commit('updateMovies', {movies});
+    commit('pagination/updateTotal', parseInt(total));
     commit('updateStatus', 'finish');
 }
 
@@ -53,7 +54,6 @@ export function createMovieModule() {
             updateMovies,
             updateSearchName(state, payload) {
                 state.searchName = payload;
-                state.pagination.page = 1;
             },
             updateStatus(state, payload) {
                 state.status = payload;
