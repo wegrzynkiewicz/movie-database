@@ -15,6 +15,16 @@
                 id="nav-collapse"
                 is-nav
             >
+                <b-navbar-nav
+                    v-show="$store.state.user.status === 'signed-in'"
+                >
+                    <b-nav-item :to="{name:'movies'}">
+                        Movies
+                    </b-nav-item>
+                    <b-nav-item :to="{name:'favorites'}">
+                        Favorites
+                    </b-nav-item>
+                </b-navbar-nav>
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item-dropdown
                         v-show="$store.state.user.status === 'signed-in'"

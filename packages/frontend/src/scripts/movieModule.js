@@ -1,73 +1,53 @@
-import {createPaginationModule} from './paginationModule';
+import {api} from './api';
 
-async function api({method = 'GET', path, query}) {
-    const searchParams = new URLSearchParams();
-    for (const [key, value] of Object.entries(query)) {
-        searchParams.append(key, value);
-    }
-    const queryString = searchParams.toString();
-    const url = `/api${path}${(queryString === '' ? '' : `?${queryString}`)}`;
-
-    const response = await fetch(url, {
-        method,
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-    });
-    const data = await response.json();
-
-    return {response, data};
-}
-
-async function updateMovies(state, {movies}) {
-    state.movies = movies;
-}
-
-async function search({commit, state}) {
+async function getMovie({commit}, {eid}) {
 
     commit('updateStatus', 'loading');
     const {data} = await api({
-        path: '/movies',
+        path: '/movie',
         query: {
-            name: state.searchName,
-            page: state.pagination.page,
+            eid,
         }
     });
-    const {movies, total} = data;
+    const {movie} = data;
 
-    commit('updateMovies', {movies});
-    commit('pagination/updateTotal', parseInt(total));
+    commit('updateMovie', movie);
     commit('updateStatus', 'finish');
+}
+
+async function favorite({commit, state}, {eid, isFavorite}) {
+
+    await api({
+        method: isFavorite ? 'POST' : 'DELETE',
+        path: '/favorite',
+        query: {
+            eid,
+        }
+    });
+
+    const movie = {...state.movie, isFavorite};
+    commit('updateMovie', movie);
 }
 
 export function createMovieModule() {
     return {
         actions: {
-            search,
+            favorite,
+            getMovie,
         },
         mutations: {
-            updateMovies,
-            updateSearchName(state, payload) {
-                state.searchName = payload;
+            updateMovie(state, payload) {
+                state.movie = payload;
             },
             updateStatus(state, payload) {
                 state.status = payload;
             },
         },
         namespaced: true,
-        modules: {
-            pagination: createPaginationModule(),
-        },
         state() {
             return {
-                searchName: '',
                 status: 'start',
-                movies: [],
+                movie: {},
             }
         },
     }

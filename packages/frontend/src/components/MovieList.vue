@@ -1,7 +1,7 @@
 <template>
-    <div class="">
-        <Loading v-show="$store.state.movie.status === 'loading'" />
-        <div v-show="$store.state.movie.status === 'finish'">
+    <div class="container">
+        <Loading v-show="$store.state.movies.status === 'loading'" />
+        <div v-show="$store.state.movies.status === 'finish'">
             <div class="row">
                 <div
                     v-for="movie of movies"
@@ -18,20 +18,19 @@
                             <h1 class="card-title">
                                 {{ movie.title }}
                             </h1>
-                            <a
-                                href="#"
+                            <router-link
+                                :to="{name: 'movie', params: {eid:movie.eid}}"
                                 class="d-block btn btn-outline-primary stretched-link"
-                                @click="show(movie.eid)"
                             >
                                 Show more...
-                            </a>
+                            </router-link>
                         </div>
                     </article>
                 </div>
             </div>
             <div class="row">
                 <Pagination
-                    module="movie"
+                    module="movies"
                     @update="onPaginationUpdate"
                 />
             </div>
@@ -50,15 +49,17 @@ export default {
     },
     computed: {
         movies() {
-            return this.$store.state.movie.movies;
+            return this.$store.state.movies.movies;
         },
+    },
+    mounted() {
+        this.$store.commit('movies/updateStatus', 'start');
     },
     methods: {
-        show() {},
-        async onPaginationUpdate() {
-            await this.$store.dispatch('movie/search');
+        async onPaginationUpdate() {s
+            await this.$store.dispatch('movies/search');
         },
-    },
+    }
 };
 </script>
 

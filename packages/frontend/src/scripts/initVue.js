@@ -8,11 +8,12 @@ import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import DatabaseSearch from '../components/DatabaseSearch'
 import FavoritesList from '../components/FavoritesList'
 import Movie from '../components/Movie'
+import {createMoviesModule} from './moviesModule';
 
 function initRouter() {
     const routes = [
         {name: 'start', path: '/', redirect: {name: 'movies'}},
-        {name: 'favorities', path: '/favorities', component: FavoritesList},
+        {name: 'favorites', path: '/favorites', component: FavoritesList},
         {name: 'movies', path: '/movies', component: DatabaseSearch},
         {name: 'movie', path: '/movie/:eid', component: Movie},
     ]
@@ -28,6 +29,7 @@ function initVuex() {
     const store = new Vuex.Store({
         modules: {
             movie: createMovieModule(),
+            movies: createMoviesModule(),
             user: createUserModule(),
         }
     });
