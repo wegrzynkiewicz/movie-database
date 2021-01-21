@@ -2,4 +2,3 @@ build
 dist
 docker-compose.override.yml
 node_modules/
-packages/**/package-lock.json
