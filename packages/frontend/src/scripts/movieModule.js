@@ -4,10 +4,8 @@ async function getMovie({commit}, {eid}) {
 
     commit('updateStatus', 'loading');
     const {data} = await api({
-        path: '/movie',
-        query: {
-            eid,
-        }
+        path: `/movie/${eid}`,
+        query: {}
     });
     const {movie} = data;
 
@@ -19,10 +17,8 @@ async function favorite({commit, state}, {eid, isFavorite}) {
 
     await api({
         method: isFavorite ? 'POST' : 'DELETE',
-        path: '/favorite',
-        query: {
-            eid,
-        }
+        path: `/favorite/${eid}`,
+        query: {},
     });
 
     const movie = {...state.movie, isFavorite};
@@ -47,7 +43,7 @@ export function createMovieModule() {
         state() {
             return {
                 status: 'start',
-                movie: {},
+                movie: null,
             }
         },
     }

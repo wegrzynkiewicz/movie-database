@@ -28,7 +28,10 @@
                     </article>
                 </div>
             </div>
-            <div class="row">
+            <div
+                v-if="pagination"
+                class="row"
+            >
                 <Pagination
                     module="movies"
                     @update="onPaginationUpdate"
@@ -47,16 +50,19 @@ export default {
         Loading,
         Pagination,
     },
+    props: {
+        pagination: {
+            type: Boolean,
+            required: true,
+        }
+    },
     computed: {
         movies() {
             return this.$store.state.movies.movies;
         },
     },
-    mounted() {
-        this.$store.commit('movies/updateStatus', 'start');
-    },
     methods: {
-        async onPaginationUpdate() {s
+        async onPaginationUpdate() {
             await this.$store.dispatch('movies/search');
         },
     }
@@ -71,13 +77,16 @@ export default {
 
 .card-img--movie {
     height: 370px;
+
 }
 
 .card--movie {
-    margin-bottom: 20px;
+    max-width: 250px;
+    margin: auto;
 }
 
 .col--poster {
+    padding-bottom: 20px;
     flex-basis: 20%;
 }
 

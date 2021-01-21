@@ -3,22 +3,20 @@
         <h1 class="my-5">
             Your favorites movies
         </h1>
+        <MovieList :pagination="false" />
     </div>
 </template>
 
 <script>
-import Loading from './Loading';
+import MovieList from './MovieList';
 
 export default {
     components: {
-        Loading,
+        MovieList,
     },
-    computed: {
-        movies() {
-            return this.$store.state.movies.movies;
-        },
-    },
-    methods: {
+    created() {
+        this.$store.commit('movies/updateStatus', 'loading');
+        this.$store.dispatch('movies/getFavoriteMovies');
     },
 };
 </script>

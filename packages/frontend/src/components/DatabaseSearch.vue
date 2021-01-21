@@ -23,7 +23,7 @@
                 Search
             </b-button>
         </b-form>
-        <MovieList />
+        <MovieList :pagination="true" />
     </div>
 </template>
 
@@ -39,13 +39,16 @@ export default {
             name: "",
         };
     },
+    created() {
+        this.$store.commit('movies/updateStatus', 'start');
+    },
     methods: {
         submit(event) {
             event.preventDefault();
             this.$store.commit('movies/updateSearchName', this.name);
             this.$store.dispatch('movies/search');
         },
-    },
+    }
 };
 </script>
 

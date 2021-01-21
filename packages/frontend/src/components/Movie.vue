@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Loading v-if="$store.state.movie.status === 'loading'" />
-        <article>
+        <article v-if="$store.state.movie.status === 'finish'">
             <div class="row my-5">
                 <div class="col-md-4 text-center">
                     <img

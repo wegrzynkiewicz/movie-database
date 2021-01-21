@@ -18,9 +18,33 @@ async function search({commit, state}) {
     commit('updateStatus', 'finish');
 }
 
+async function getFavoriteMovies({commit}) {
+
+    commit('updateStatus', 'loading');
+    const {data} = await api({
+        path: '/favorites',
+        query: {},
+    });
+    const {favoriteMovies} = data;
+
+    const promises = favoriteMovies.map(async (eid) => {
+        const {data} = await api({
+            path: `/movie/${eid}`,
+            query: {},
+        });
+        const {movie} = data;
+        return movie;
+    });
+    const movies = await Promise.all(promises);
+
+    commit('updateMovies', movies);
+    commit('updateStatus', 'finish');
+}
+
 export function createMoviesModule() {
     return {
         actions: {
+            getFavoriteMovies,
             search,
         },
         mutations: {
